@@ -6,6 +6,13 @@ const colors = [
   '#009688',
   '#795548',
 ];
+let intevalId = null;
+let isActive = false;
+
+
+const randomIntegerFromInterval = (min, max) => {
+  return Math.floor(Math.random() * (max - min + 1) + min);
+};
 
 const refs = {
   body: document.querySelector("body"),
@@ -13,25 +20,40 @@ const refs = {
   stopButt: document.querySelector('[data-action="stop"]')
 }
 
-refs.startButt.addEventListener('click', onStartButt);
-refs.stopButt.addEventListener('click', onStopButt);
+refs.body.style.backgroundColor = localStorage.getItem('color')
 
-let intervalId = null;
+refs.startButt.addEventListener('click', onStartButt);
+refs.stopButt.addEventListener('click',onStopButt );
 
 function onStartButt() {
-  refs.startButt.disabled = true;
-  intervalId = setInterval(changeBodyColor, 1000);
-  return intervalId;
-}
-function onStopButt() {
-  refs.startButt.disabled = false;
-  clearInterval(intervalId);
-}
-function changeBodyColor() {
-  refs.body.style.backgroundColor =
-    colors[randomIntegerFromInterval(0, colors.length)];
-}
-const randomIntegerFromInterval = (min, max) => {
-  return Math.floor(Math.random() * (max - min + 1) + min);
-};
+    if (isActive) {
+      return;
+  };
+  intervalColor()
+    isActive = true;
+  
 
+
+}
+
+
+function onStopButt() {
+  clearInterval(intevalId);
+  isActive = false
+
+}
+
+  function intervalColor() {
+    
+ 
+
+  intevalId = setInterval(() => {
+ 
+   refs.body.style.backgroundColor  = colors[randomIntegerFromInterval(0, colors.length - 1)];
+
+    localStorage.setItem('color',  refs.body.style.backgroundColor); ;
+
+  }, 1000
+  
+  );
+ }
