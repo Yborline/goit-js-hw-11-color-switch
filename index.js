@@ -44,9 +44,6 @@ function onStopButt() {
 }
 
   function intervalColor() {
-    
- 
-
   intevalId = setInterval(() => {
  
    refs.body.style.backgroundColor  = colors[randomIntegerFromInterval(0, colors.length - 1)];
